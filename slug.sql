@@ -16,3 +16,5 @@ UPDATE `products` SET `slug` = REPLACE ( `slug`, '--', '-' );
 UPDATE `products` SET `slug` = REPLACE ( `slug`, '--', '-' );
 UPDATE `products` SET `slug` = REPLACE ( `slug`, '--', '-' );
 UPDATE `products` SET `slug` = REPLACE ( `slug`, '"', '-' );
+UPDATE `products` SET `slug` = REPLACE ( `slug`, '/', '-' );
+UPDATE `products` SET `slug` = LOWER(`slug`);
