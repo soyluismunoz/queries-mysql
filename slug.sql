@@ -20,4 +20,5 @@ UPDATE `products` SET `slug` = REPLACE ( `slug`, '%', '' );
 UPDATE `products` SET `slug` = REPLACE ( `slug`, 'º', '' );
 UPDATE `products` SET `slug` = REPLACE ( `slug`, 'ª', '' );
 UPDATE `products` SET `slug` = REPLACE ( `slug`, '/', '-' );
+UPDATE `products` SET `slug` = REPLACE ( `slug`, '#', '' );
 UPDATE `products` SET `slug` = LOWER(`slug`);
