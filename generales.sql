@@ -11,6 +11,9 @@ WHERE RIGHT(slug, 1) = '-'
 //tablas realcionadas 
 SELECT `bookingStart`,`bookingEnd`, `customFields`, `info` FROM `yah_amelia_appointments` INNER JOIN `yah_amelia_customer_bookings` ON `yah_amelia_appointments`.`ID` = `yah_amelia_customer_bookings`.`appointmentId` WHERE `bookingStart` LIKE "%2020-07-13 07:00:00%" 
 
+// tablas relacionadas OPTIMIZADO
+SELECT `wpxj_amelia_customer_bookings`.`id`, `bookingStart`,`bookingEnd`, `customFields`, `info`, `firstName`, `lastName`,`email`FROM `wpxj_amelia_appointments`, `wpxj_amelia_customer_bookings`, `wpxj_amelia_users` WHERE `wpxj_amelia_appointments`.`ID` = `wpxj_amelia_customer_bookings`.`appointmentId` AND `wpxj_amelia_customer_bookings`.`customerId` = `wpxj_amelia_users`.`id` AND `bookingStart` LIKE '%2020-09-18 23:00:00%' ORDER BY `wpxj_amelia_customer_bookings`.`customerId` ASC 
+
 //borrar post viejos en wordpress
 UPDATE `wp_posts` SET `post_status` = REPLACE(`post_status`,'publish','trash')WHERE `post_date` < '2016-10-12 00:00:00' AND `post_type` = 'post' AND `post_status` = 'publish' 
 
