@@ -11,3 +11,9 @@ SELECT * FROM wp_posts
     AND wp_term_taxonomy.taxonomy = "category"
     AND wp_term_taxonomy.term_id = 11
     ORDER BY post_date DESC
+
+//cambiar urls
+UPDATE wp_options SET option_value = REPLACE ( option_value, 'dominioA.com', 'dominioB.com' );
+UPDATE wp_posts SET guid = REPLACE ( guid, 'dominioA.com', 'dominioB.com' );
+UPDATE wp_posts SET post_content = REPLACE ( post_content, 'dominioA.com', 'dominioB.com' );
+UPDATE wp_postmeta SET meta_value = REPLACE ( meta_value, 'dominioA.com', 'dominioB.com' );
