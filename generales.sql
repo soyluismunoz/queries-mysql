@@ -29,3 +29,9 @@ WHERE
 	`payments`.`paymentable_id` = `purchases`.`id`
 GROUP BY
 	`payments`.`paymentable_id`
+	
+/* rellenar una columna con otra */
+UPDATE shipments SET test_concat = CONCAT(date_shipment, ' ', time_shipment)
+
+/* busqueda por fecha */
+SELECT * FROM iv_ledgers WHERE created_at between '2022-10-31 00:00:00' and '2022-10-31 23:59:59';
