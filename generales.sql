@@ -35,3 +35,7 @@ UPDATE shipments SET test_concat = CONCAT(date_shipment, ' ', time_shipment)
 
 /* busqueda por fecha */
 SELECT * FROM iv_ledgers WHERE created_at between '2022-10-31 00:00:00' and '2022-10-31 23:59:59';
+
+
+/* busqueda en un acampo json */
+SELECT * FROM shipments WHERE JSON_CONTAINS(carrier, JSON_OBJECT('id', 1))
