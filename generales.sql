@@ -36,6 +36,8 @@ UPDATE shipments SET test_concat = CONCAT(date_shipment, ' ', time_shipment)
 /* busqueda por fecha */
 SELECT * FROM iv_ledgers WHERE created_at between '2022-10-31 00:00:00' and '2022-10-31 23:59:59';
 
+/* actualizacion codicional con varias condinciones */
+UPDATE inventories SET `type` = CASE WHEN `type` = '1' THEN 'in' WHEN `type` = '2' THEN 'out' ELSE `type` END;
 
 /* busqueda en un acampo json */
 SELECT * FROM shipments WHERE JSON_CONTAINS(carrier, JSON_OBJECT('id', 1))
