@@ -41,3 +41,36 @@ UPDATE inventories SET `type` = CASE WHEN `type` = '1' THEN 'in' WHEN `type` = '
 
 /* busqueda en un acampo json */
 SELECT * FROM shipments WHERE JSON_CONTAINS(carrier, JSON_OBJECT('id', 1))
+
+
+/*Rentabilidad brutal por cliente*/
+SELECT 
+	`orders`.`customer_id`,
+	JSON_EXTRACT(`orders`.`customer`, "$.trade_name") AS customer_name,
+	SUM(`orders`.`total_usd`) AS `total_sale`,
+	SUM(`orders`.`discount` / `orders`.`rate`) AS `total_discount`,
+	COALESCE(SUM(`credits`.`total_usd`), 0) AS `total_returns`,
+	SUM(`order_items`.`total_cost`) AS `total_order_items`,
+	SUM(`orders`.`total_usd` * (IFNULL(JSON_EXTRACT(`orders`.`customer`, "$.zone.cost_percentage"), 6) / 100 )) AS `cost_of_shipment`,
+	COUNT(*) AS qty
+FROM 
+	orders
+	LEFT JOIN credits ON `orders`.`id` = `credits`.`order_id` AND `orders`.`customer_id` = `credits`.`customer_id`
+	LEFT JOIN (
+		SELECT order_id, SUM(unit_cost * qty) AS total_cost
+		FROM order_items
+		GROUP BY order_id
+	) AS order_items ON `orders`.`id` = `order_items`.`order_id`
+GROUP BY
+	`customer_name`,
+	`customer_id`;
+
+/*Rentabilidad bruta por producto*/
+SELECT p.`id`, p.`name`, c.`name`, b.`name`,
+       SUM((oi.unit_price_usd - oi.unit_cost) * oi.qty) AS gross_profit
+FROM products AS p
+JOIN categories AS c ON p.category_id = c.id
+JOIN brands AS  b ON p.brand_id = b.id
+JOIN order_items AS oi ON p.`id` = oi.item_id
+GROUP BY p.`id`, p.`name`, c.`name`, b.`name`;
+	
