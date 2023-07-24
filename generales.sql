@@ -73,4 +73,20 @@ JOIN categories AS c ON p.category_id = c.id
 JOIN brands AS  b ON p.brand_id = b.id
 JOIN order_items AS oi ON p.`id` = oi.item_id
 GROUP BY p.`id`, p.`name`, c.`name`, b.`name`;
+
+
+/*rankings*/
+SELECT
+	`student_id`,
+	SUM(`score`) AS `total_score`,
+	RANK() OVER (ORDER BY SUM(`score`) DESC) AS `school_rank`
+FROM
+	`levels`
+	JOIN `students` ON `levels`.`student_id` = `students`.`id`
+	JOIN `classrooms` ON `students`.`classroom_id` = `classrooms`.`id`
+	JOIN `schools` ON `classrooms`.`school_id` = `schools`.`id`
+WHERE
+	`schools`.`id` = 2
+GROUP BY
+	`student_id`;
 	
