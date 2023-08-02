@@ -89,4 +89,23 @@ WHERE
 	`schools`.`id` = 2
 GROUP BY
 	`student_id`;
+
+/* average tima online and disconect students */
+SELECT
+    `user_id`,
+    TIME_FORMAT(AVG(DATE_FORMAT(`session_init`, '%H:%i:%s')), '%H:%i:%s') AS `avg_session_init`,
+    TIME_FORMAT(AVG(DATE_FORMAT(`session_end`, '%H:%i:%s')), '%H:%i:%s') AS `avg_session_end`,
+    COUNT(*) AS `qty`
+FROM
+    `user_activities`
+GROUP BY
+    `user_id`;
+    
+SELECT
+    DATE(`session_init`) AS `date`,
+    COUNT(DISTINCT `user_id`) AS `connected_users`
+FROM
+    `user_activities`
+GROUP BY
+    `date`;
 	
