@@ -1,3 +1,6 @@
+/*reiniciar numeracion de un campo incremental*/
+ALTER TABLE tblname AUTO_INCREMENT = 0;
+
 /*consultar registros que tengan guion al final */
 SELECT slug=LEFT(slug,length(slug) -1) FROM products WHERE RIGHT(slug, 1) = '-'
 
