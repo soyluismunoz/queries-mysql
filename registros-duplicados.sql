@@ -27,3 +27,27 @@ GROUP BY
 	`trasaction_type` 
 HAVING
 	Count( * ) > 0;
+
+SELECT 
+    p.trade_name,
+    GROUP_CONCAT(p.id) AS ids,
+    GROUP_CONCAT(IF(p.deleted_at IS NULL, 'true', 'false')) AS is_deleted,
+    COUNT(*) AS qty
+FROM
+    people p
+WHERE
+    p.trade_name IN (
+        SELECT
+            trade_name
+        FROM
+            people
+        GROUP BY
+            trade_name
+        HAVING
+            COUNT(*) > 1
+    )
+GROUP BY
+    p.trade_name,
+    is_deleted
+HAVING
+    COUNT(*) > 1;
